@@ -1,0 +1,82 @@
+{
+  "name": "prettier-plugin-java-vscode",
+  "displayName": "prettier-plugin-java For VSCode",
+  "description": "A VSCode plugin that uses prettier-plugin-java to format .java files. Based on the now removed mwpb.java-prettier-formatter extension.",
+  "version": "1.0.0",
+  "publisher": "RudraPatel",
+  "license": "MIT",
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RudraPatel2003/prettier-plugin-java-vscode"
+  },
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onLanguage:java"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "java",
+        "extensions": [
+          ".java"
+        ],
+        "aliases": [
+          "Java",
+          "java"
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Prettier Plugin Java VSCode",
+      "properties": {
+        "prettier-plugin-java-vscode.prettierConfigPath": {
+          "type": ["string", "null"],
+          "default": null,
+          "description": "Provide a absolution path to your prettier configuration file."
+        },
+        "prettier-plugin-java-vscode.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable the plugin."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.96.0",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0"
+  },
+  "dependencies": {
+    "prettier": "^3.4.2",
+    "prettier-plugin-java": "^2.6.5"
+  }
+}
