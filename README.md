@@ -1,4 +1,4 @@
-# prettier-plugin-java-vscode README
+# Prettier Java Plugin
 
 A VSCode extension to format Java files with Prettier using prettier-plugin-java.
 
