@@ -21,7 +21,7 @@ async function formatJavaDocument(
   const isEnabled = checkIfEnabled();
 
   if (!isEnabled) {
-    log("Prettier Plugin Java VSCode is disabled");
+    log("Prettier Plugin Java VSCode is disabled\n");
     return null;
   }
 
@@ -50,13 +50,13 @@ async function formatJavaDocument(
 
   const elapsedTime = Date.now() - start;
 
-  log(`Formatted ${document.fileName} in ${elapsedTime}ms.`);
+  log(`Formatted ${document.fileName} in ${elapsedTime}ms\n`);
 
   return [TextEdit.replace(entireDocumentRange, formattedText)];
 }
 
 export function activate(context: ExtensionContext) {
-  log("Prettier Plugin Java VSCode activated.");
+  log("Prettier Plugin Java VSCode activated\n");
 
   const disposable = languages.registerDocumentFormattingEditProvider("java", {
     provideDocumentFormattingEdits: formatJavaDocument,

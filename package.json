@@ -1,7 +1,7 @@
 {
   "name": "prettier-plugin-java-vscode",
-  "displayName": "prettier-plugin-java For VSCode",
-  "description": "A VSCode plugin that uses prettier-plugin-java to format .java files. Based on the now removed mwpb.java-prettier-formatter extension.",
+  "displayName": "Prettier Java Plugin",
+  "description": "Format Java files with Prettier using prettier-plugin-java.",
   "version": "1.0.0",
   "publisher": "RudraPatel",
   "license": "MIT",
@@ -25,8 +25,9 @@
   "categories": [
     "Formatters"
   ],
+  "icon": "icon.png",
   "activationEvents": [
-    "onLanguage:java"
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -43,7 +44,7 @@
       }
     ],
     "configuration": {
-      "title": "Prettier Plugin Java VSCode",
+      "title": "Prettier Java Plugin",
       "properties": {
         "prettier-plugin-java-vscode.prettierConfigPath": {
           "type": ["string", "null"],

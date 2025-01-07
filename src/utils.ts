@@ -31,7 +31,7 @@ async function getPretterConfigPath(document: TextDocument): Promise<string> {
 
     if (!fileExists) {
       log(
-        `Specified Prettier config file (${userProvidedConfigPath}) does not exist.`,
+        `Specified Prettier config file (${userProvidedConfigPath}) does not exist`,
       );
       log(
         `Prettier will attempt to resolve the config file from the document file name (${document.fileName})`,
@@ -45,7 +45,7 @@ async function getPretterConfigPath(document: TextDocument): Promise<string> {
     return userProvidedConfigPath;
   }
 
-  log("No specified Prettier config file.");
+  log("No specified Prettier config file");
   log(
     `Prettier will attempt to resolve the config file from the document file name (${document.fileName})`,
   );
