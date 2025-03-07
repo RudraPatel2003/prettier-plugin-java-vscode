@@ -36,6 +36,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 1.0.2
+
+- Update logo to follow VSCode guidelines
+
 ### 1.0.1
 
 - Upgrade dependencies
