@@ -10,7 +10,7 @@ import {
   TextEdit,
 } from "vscode";
 
-import { log } from "./logger";
+import { flushLogs, log } from "./logger";
 import { checkIfEnabled, getPrettierOptions } from "./utils";
 
 async function formatJavaDocument(
@@ -22,6 +22,7 @@ async function formatJavaDocument(
 
   if (!isEnabled) {
     log("Prettier Plugin Java VSCode is disabled\n");
+    void flushLogs();
     return null;
   }
 
@@ -52,11 +53,14 @@ async function formatJavaDocument(
 
   log(`Formatted ${document.fileName} in ${elapsedTime}ms\n`);
 
+  void flushLogs();
+
   return [TextEdit.replace(entireDocumentRange, formattedText)];
 }
 
 export function activate(context: ExtensionContext) {
   log("Prettier Plugin Java VSCode activated\n");
+  void flushLogs();
 
   const disposable = languages.registerDocumentFormattingEditProvider("java", {
     provideDocumentFormattingEdits: formatJavaDocument,

@@ -2,7 +2,7 @@
   "name": "prettier-plugin-java-vscode",
   "displayName": "Prettier Java Plugin",
   "description": "Format Java files with Prettier using prettier-plugin-java.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publisher": "RudraPatel",
   "license": "MIT",
   "scripts": {
@@ -47,9 +47,12 @@
       "title": "Prettier Java Plugin",
       "properties": {
         "prettier-plugin-java-vscode.prettierConfigPath": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "default": null,
-          "description": "Provide a absolution path to your prettier configuration file."
+          "description": "Provide an absolute, relative, or workspace-relative path to a Prettier config file. If not provided or missing, the extension will attempt to resolve the config file from the document file name."
         },
         "prettier-plugin-java-vscode.enabled": {
           "type": "boolean",

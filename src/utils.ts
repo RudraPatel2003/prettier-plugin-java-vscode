@@ -1,4 +1,5 @@
 import { constants, promises } from "fs";
+import path from "path";
 import { Options, resolveConfig } from "prettier";
 import { TextDocument, workspace } from "vscode";
 
@@ -21,45 +22,71 @@ async function doesFileExist(filePath: string): Promise<boolean> {
   }
 }
 
-async function getPretterConfigPath(document: TextDocument): Promise<string> {
+function transformUserProvidedConfigPath(configPath: string): string {
+  /**
+   * Prettier wants an absolute path to a config file
+   * This function supports the following scenarios:
+   * 1. The user wants to inject their workspace folder into the config path
+   * 2. The user provides a relative path which will attempt to be coerced into an absolute path
+   */
+  const workspaceFolder = workspace.workspaceFolders?.[0]?.uri.fsPath;
+
+  if (workspaceFolder && configPath.includes("${workspaceFolder}")) {
+    return configPath.replace("${workspaceFolder}", workspaceFolder);
+  }
+
+  if (workspaceFolder && !path.isAbsolute(configPath)) {
+    return path.join(workspaceFolder, configPath);
+  }
+
+  return configPath;
+}
+
+async function getPrettierConfigPath(document: TextDocument): Promise<string> {
   const userProvidedConfigPath = workspace
     .getConfiguration("prettier-plugin-java-vscode")
     .get<string | null>("prettierConfigPath");
 
-  if (userProvidedConfigPath) {
-    const fileExists = await doesFileExist(userProvidedConfigPath);
+  if (!userProvidedConfigPath) {
+    log(
+      `No specified Prettier config file. Prettier will attempt to resolve the config file from the document file name (${document.fileName})`,
+    );
 
-    if (!fileExists) {
-      log(
-        `Specified Prettier config file (${userProvidedConfigPath}) does not exist`,
-      );
-      log(
-        `Prettier will attempt to resolve the config file from the document file name (${document.fileName})`,
-      );
-
-      return document.fileName;
-    }
-
-    log(`Using prettier config path: ${userProvidedConfigPath}`);
-
-    return userProvidedConfigPath;
+    return document.fileName;
   }
 
-  log("No specified Prettier config file");
-  log(
-    `Prettier will attempt to resolve the config file from the document file name (${document.fileName})`,
+  const transformedConfigPath = transformUserProvidedConfigPath(
+    userProvidedConfigPath,
   );
 
-  return document.fileName;
+  if (userProvidedConfigPath !== transformedConfigPath) {
+    log(
+      `Transformed provided config path '${userProvidedConfigPath}' into '${transformedConfigPath}'`,
+    );
+  }
+
+  const fileExists = await doesFileExist(transformedConfigPath);
+
+  if (!fileExists) {
+    log(
+      `Specified Prettier config file (${transformedConfigPath}) does not exist. Prettier will attempt to resolve the config file from the document file name (${document.fileName})`,
+    );
+
+    return document.fileName;
+  }
+
+  log(`Using prettier config path: ${transformedConfigPath}`);
+
+  return transformedConfigPath;
 }
 
 export async function getPrettierOptions(
   document: TextDocument,
 ): Promise<Options | null> {
-  const prettierConfigPath = await getPretterConfigPath(document);
+  const prettierConfigPath = await getPrettierConfigPath(document);
 
   try {
-    return resolveConfig(prettierConfigPath, { editorconfig: true });
+    return await resolveConfig(prettierConfigPath, { editorconfig: true });
   } catch (error) {
     log(`Error parsing Prettier config: ${error}`);
     return null;
