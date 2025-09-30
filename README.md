@@ -32,9 +32,21 @@ To set this formatter as the default formatter for Java files, add the following
 This extension contributes the following settings:
 
 - `prettier-plugin-java-vscode.enabled`: Enable/disable the plugin.
-- `prettier-plugin-java-vscode.prettierConfigPath`: Provide an absolution path to your prettier configuration file.
+- `prettier-plugin-java-vscode.prettierConfigPath`: Provide an absolute, relative, or workspace-relative path to a Prettier config file. If not provided or missing, the extension will attempt to resolve the config file from the document file name.
+
+Examples of valid config paths include:
+
+- An absolute path: `/home/user/my-project/.prettierrc`
+- A relative path `.prettierrc`
+- A workspace-relative path `${workspaceFolder}/.prettierrc`
+
+The `Output` channel will display information about how this config file path is resolved.
 
 ## Release Notes
+
+### 1.0.3
+
+- Add support for relative and workspace-relative config paths
 
 ### 1.0.2
 
