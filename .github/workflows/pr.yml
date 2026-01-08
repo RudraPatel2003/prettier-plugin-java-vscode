@@ -15,23 +15,6 @@ jobs:
   lint-and-format:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/iron"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Check that project is able to be packaged
-        run: npm run package
-
       - name: Check that PR title follows conventional commits using regex
         env:
           TITLE: ${{ github.event.pull_request.title }}
@@ -48,3 +31,18 @@ jobs:
             echo "See the following link for more information: https://www.conventionalcommits.org/en/v1.0.0/"
             exit 1
           fi
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/iron"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check that project is able to be packaged
+        run: npm run package

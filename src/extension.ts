@@ -58,7 +58,7 @@ async function formatJavaDocument(
   return [TextEdit.replace(entireDocumentRange, formattedText)];
 }
 
-export function activate(context: ExtensionContext) {
+export function activate(context: ExtensionContext): void {
   log("Prettier Plugin Java VSCode activated\n");
   void flushLogs();
 
