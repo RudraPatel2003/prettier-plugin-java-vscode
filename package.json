@@ -20,7 +20,7 @@
     "url": "https://github.com/RudraPatel2003/prettier-plugin-java-vscode"
   },
   "engines": {
-    "vscode": "^1.96.0"
+    "vscode": "^1.107.0"
   },
   "categories": [
     "Formatters"

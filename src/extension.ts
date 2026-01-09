@@ -59,7 +59,10 @@ async function formatJavaDocument(
 }
 
 export function activate(context: ExtensionContext): void {
-  log("Prettier Plugin Java VSCode activated\n");
+  const extensionVersion = context.extension.packageJSON.version;
+
+  log(`Prettier Plugin Java VSCode version ${extensionVersion} activated!\n`);
+
   void flushLogs();
 
   const disposable = languages.registerDocumentFormattingEditProvider("java", {
