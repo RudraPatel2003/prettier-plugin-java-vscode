@@ -44,6 +44,10 @@ The `Output` channel will display information about how this config file path is
 
 ## Release Notes
 
+### 1.0.4
+
+- Upgrade dependencies
+
 ### 1.0.3
 
 - Add support for relative and workspace-relative config paths

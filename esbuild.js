@@ -13,6 +13,7 @@ const esbuildProblemMatcherPlugin = {
     build.onStart(() => {
       console.log("[watch] build started");
     });
+
     build.onEnd((result) => {
       result.errors.forEach(({ text, location }) => {
         console.error(`✘ [ERROR] ${text}`);
